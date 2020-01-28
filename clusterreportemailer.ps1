@@ -10,8 +10,7 @@ Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
 $Timestamp = (Get-Date -Format "yyyy-MM-dd")
 
 #Build array for vCenters
-$vCenter = "vcenter.col.missouri.edu", "view-vcenter.col.missouri.edu", "doit-vc-test2.col.missouri.edu", "umkc-vcenter.col.missouri.edu"
-
+$vCenter = "vcenter.yourdomain.edu",
 #Connect to vCenter server
 connect-viserver $vCenter[0]
 
@@ -77,7 +76,7 @@ $results = foreach($cluster in Get-Cluster){
 	
                 }
 
-$results | export-csv -path "C:\Users\a1_skinnercl\Desktop\clusterinfo.csv"
+$results | export-csv -path "C:\clusterinfo.csv"
 
-Send-MailMessage -From 'vCenterReporter <camncolinsreportsquad@missouri.edu>' -To 'User02 <mudoitcsghypervisor@missouri.edu>' -Subject 'Cluster Report' -Body "Cluster Report is attached." -Attachments .\clusterinfo.csv -Priority High -DeliveryNotificationOption OnSuccess, OnFailure -SmtpServer 'smtpinternal.missouri.edu'
+Send-MailMessage -From 'vCenterReporter <reportsquad@missouri.edu>' -To 'User02 <receiver@yourdomain.edu>' -Subject 'Cluster Report' -Body "Cluster Report is attached." -Attachments .\clusterinfo.csv -Priority High -DeliveryNotificationOption OnSuccess, OnFailure -SmtpServer 'smtpinternal.yourdomain.edu'
 
